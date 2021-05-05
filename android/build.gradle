@@ -5,7 +5,6 @@ plugins {
     id 'org.jetbrains.kotlin.android'
     id 'org.jetbrains.kotlin.kapt'
     id 'dagger.hilt.android.plugin'
-    id 'androidx.navigation.safeargs.kotlin'
 }
 apply from: rootDir.path + '/release/signingRelease.gradle'
 android {
@@ -80,16 +79,16 @@ android {
     }
 }
 dependencies {
-    implementation projects.items
     implementation projects.itemsAndroid
-    //
     coreLibraryDesugaring libs.desugar
-    // NOTES: temp hack: use compose at AS 4.1
-    add("kotlinCompilerPluginClasspath", libs.compose.compiler)
+    add("kotlinCompilerPluginClasspath", libs.compose.compiler){
+        because("Using jetpack-compose at AS 4.1")
+    }
     implementation libs.accompanist.insets
     implementation libs.accompanist.systemuicontroller
     implementation libs.activity.activity
     implementation libs.activity.compose
+    implementation libs.compose.animation.animation
     implementation libs.compose.foundation.foundation
     implementation libs.compose.foundation.layout
     implementation libs.compose.material.iconscore
@@ -127,7 +126,6 @@ dependencies {
     implementation libs.navigation.runtime.runtime
     implementation libs.room.runtime
     implementation libs.serialization.json.json
-    implementation libs.serialization.json.jvm
     implementation libs.timber
     //
     kapt libs.dagger.hilt.compiler

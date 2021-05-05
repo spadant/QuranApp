@@ -1,6 +1,5 @@
 package id.ratabb.quran.ui.common
 
-import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.material.LocalTextStyle
 import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
@@ -19,10 +18,14 @@ import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.LayoutDirection
 import androidx.compose.ui.unit.TextUnit
 import id.ratabb.quran.ui.theme.UthmanTahaNaskh
+import java.text.NumberFormat
+import java.util.Locale
+
+private val arabicNumberFormat by lazy { NumberFormat.getInstance(Locale("ar")) }
 
 @Composable
-fun TextArabic(
-    text: String,
+fun NumberArabic(
+    number: Number,
     modifier: Modifier = Modifier,
     color: Color = Color.Unspecified,
     fontSize: TextUnit = TextUnit.Unspecified,
@@ -41,8 +44,8 @@ fun TextArabic(
 ) {
     CompositionLocalProvider(LocalLayoutDirection provides LayoutDirection.Rtl) {
         Text(
-            text = text,
-            modifier = modifier.fillMaxWidth(),
+            text = arabicNumberFormat.format(number),
+            modifier = modifier,
             color = color,
             fontSize = fontSize,
             fontStyle = fontStyle,
